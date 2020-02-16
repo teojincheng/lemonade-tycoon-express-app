@@ -22,10 +22,10 @@ router.post("/", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-  const response = {};
-  response.name = req.body.name;
-  response.qty = req.body.qty;
-  res.status(201).send(response);
+  const respObj = {};
+  respObj.name = req.body.name;
+  respObj.qty = req.body.qty;
+  res.status(201).send(respObj);
 });
 
 router.patch("/:name", async (req, res, next) => {
