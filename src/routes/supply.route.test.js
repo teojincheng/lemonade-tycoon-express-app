@@ -65,4 +65,17 @@ describe("supplies", () => {
 
     expect(actualResponse).toEqual(expectedData);
   });
+
+  it("PATCH /supplies/:name should update the correct supply item and respond with the updated item", async () => {
+    const itemData = {
+      name: "Lemon",
+      qty: 1
+    };
+    const { body: actualResponse } = await request(app)
+      .patch(`/supplies/${itemData.name}`)
+      .send(itemData)
+      .expect(200);
+
+    expect(actualResponse).toEqual(itemData);
+  });
 });
