@@ -17,6 +17,8 @@ router.post("/", async (req, res, next) => {
   }
   const response = {};
   response.name = req.body.name;
-  response.body = req.body.qty;
+  response.qty = req.body.qty;
   res.status(201).send(response);
 });
+
+module.exports = router;
