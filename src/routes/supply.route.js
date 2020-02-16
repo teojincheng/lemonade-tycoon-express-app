@@ -1,4 +1,5 @@
 const express = require("express");
+const wrapAsync = require("../utils/wrapAsync");
 const router = express.Router();
 
 const Supply = require("../models/supply.model");
@@ -28,7 +29,7 @@ router.post("/", async (req, res, next) => {
   res.status(201).send(respObj);
 });
 
-router.patch("/:name", async (req, res, next) => {
+router.patch("/:name", async (req, res) => {
   const updatedItem = await updateItem(req.params.name, req.body);
   const response = {};
   response.name = updatedItem.name;
