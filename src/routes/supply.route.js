@@ -13,13 +13,14 @@ const createSupplyItem = async supplyData => {
 };
 
 const updateItem = async (itemName, itemData) => {
-  const item = Supply.find({
-    name: {
-      $elemMatch: {
-        name: itemName
-      }
-    }
-  });
+  const updatedItem = await Supply.findOneAndUpdate(
+    { "items.name": itemName },
+    { $set: { "items.$.qty": itemData.qty } },
+    { new: true },
+    function(err, doc) {}
+  );
+
+  //const item = supply.findOne({ "items.name": itemName });
 
   /*
   const result = await Supply.findOneAndUpdate({ name }, itemData, {
@@ -27,6 +28,7 @@ const updateItem = async (itemName, itemData) => {
   });
   return result;
   */
+  return updatedItem;
 };
 
 router.post("/", async (req, res, next) => {
@@ -46,6 +48,8 @@ router.post("/", async (req, res, next) => {
 
 router.patch("/:name", async (req, res) => {
   const updatedItem = await updateItem(req.params.name, req.body);
+  console.log("checking for updated item");
+  console.log(updatedItem);
   const response = {};
   response.name = updatedItem.name;
   response.qty = updatedItem.qty;
