@@ -20,13 +20,18 @@ const updateItem = async (name, itemData) => {
 router.post("/", async (req, res, next) => {
   try {
     await createSupplyItem(req.body);
+    const respObj = {};
+    respObj.name = req.body.name;
+    respObj.qty = req.body.qty;
+    res.status(201).send(respObj);
   } catch (err) {
+    if (err.name === "ValidationError") {
+      err.statusCode = 400;
+    } else if (err.name === "MongoError") {
+      err.statusCode = 400;
+    }
     next(err);
   }
-  const respObj = {};
-  respObj.name = req.body.name;
-  respObj.qty = req.body.qty;
-  res.status(201).send(respObj);
 });
 
 router.patch("/:name", async (req, res) => {

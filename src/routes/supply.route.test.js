@@ -17,7 +17,7 @@ describe("supplies", () => {
       const mongoUri = await mongoServer.getConnectionString();
       await mongoose.connect(mongoUri);
     } catch (err) {
-      console.error(err);
+      next(err);
     }
   });
 
@@ -28,11 +28,6 @@ describe("supplies", () => {
 
   beforeEach(async () => {
     const suppliesData = [
-      {
-        name: "Lemon",
-        qty: 5,
-        costPrice: 0.4
-      },
       {
         name: "Sugar",
         qty: 5,
@@ -60,15 +55,15 @@ describe("supplies", () => {
 
     const { body: actualResponse } = await request(app)
       .post("/supplies")
-      .expect(201)
-      .send(itemData);
+      .send(itemData)
+      .expect(201);
 
     expect(actualResponse).toEqual(expectedData);
   });
 
   it("PATCH /supplies/:name should update the correct supply item and respond with the updated item", async () => {
     const itemData = {
-      name: "Lemon",
+      name: "Sugar",
       qty: 1
     };
     const { body: actualResponse } = await request(app)

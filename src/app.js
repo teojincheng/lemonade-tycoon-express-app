@@ -5,14 +5,8 @@ app.use(express.json());
 const supplyRouter = require("./routes/supply.route");
 const recipeRouter = require("./routes/recipe.route");
 
-app.use("/supplies", supplyRouter);
 app.use("/recipes", recipeRouter);
-
-app.use((err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err);
-  }
-});
+app.use("/supplies", supplyRouter);
 
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
