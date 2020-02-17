@@ -1,29 +1,39 @@
 const express = require("express");
-const wrapAsync = require("../utils/wrapAsync");
 const router = express.Router();
 
 const Supply = require("../models/supply.model");
 
 const createSupplyItem = async supplyData => {
   await Supply.init();
-  const doc = Supply(supplyData);
-  await doc.save();
+  const supply = new Supply();
+  supply.items = supplyData;
+  await supply.save();
+  //const doc = Supply(supplyData);
+  //await doc.save();
 };
 
-const updateItem = async (name, itemData) => {
+const updateItem = async (itemName, itemData) => {
+  const item = Supply.find({
+    name: {
+      $elemMatch: {
+        name: itemName
+      }
+    }
+  });
+
+  /*
   const result = await Supply.findOneAndUpdate({ name }, itemData, {
     new: true
   });
   return result;
+  */
 };
 
 router.post("/", async (req, res, next) => {
   try {
+    suppliesObj = { items: req.body };
     await createSupplyItem(req.body);
-    const respObj = {};
-    respObj.name = req.body.name;
-    respObj.qty = req.body.qty;
-    res.status(201).send(respObj);
+    res.status(201).send(suppliesObj);
   } catch (err) {
     if (err.name === "ValidationError") {
       err.statusCode = 400;

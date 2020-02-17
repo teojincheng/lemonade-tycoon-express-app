@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const supplySchema = new mongoose.Schema({
+const item = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -12,6 +12,11 @@ const supplySchema = new mongoose.Schema({
   },
   costPrice: Number
 });
+
+const supplySchema = new mongoose.Schema({
+  items: [item]
+});
+
 const Supply = mongoose.model("Supply", supplySchema);
 
 module.exports = Supply;

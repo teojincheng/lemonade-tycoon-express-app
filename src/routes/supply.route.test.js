@@ -27,13 +27,15 @@ describe("supplies", () => {
   });
 
   beforeEach(async () => {
-    const suppliesData = [
-      {
-        name: "Sugar",
-        qty: 5,
-        costPrice: 0.4
-      }
-    ];
+    const suppliesData = {
+      items: [
+        {
+          name: "Sugar",
+          qty: 5,
+          costPrice: 0.4
+        }
+      ]
+    };
     await Supply.create(suppliesData);
   });
 
@@ -42,23 +44,25 @@ describe("supplies", () => {
   });
 
   it("POST /supplies should add a new supply item and respond with new item", async () => {
-    const itemData = {
-      name: "Lemon",
-      qty: 50,
-      costPrice: 0.4
-    };
-
-    const expectedData = {
-      name: "Lemon",
-      qty: 50
-    };
+    const SuppliesData = [
+      {
+        name: "Lemon",
+        qty: 5,
+        costPrice: 0.4
+      },
+      {
+        name: "Ice",
+        qty: 5,
+        costPrice: 0.4
+      }
+    ];
 
     const { body: actualResponse } = await request(app)
       .post("/supplies")
-      .send(itemData)
+      .send(SuppliesData)
       .expect(201);
 
-    expect(actualResponse).toEqual(expectedData);
+    expect(actualResponse).toEqual({ items: SuppliesData });
   });
 
   it("PATCH /supplies/:name should update the correct supply item and respond with the updated item", async () => {
