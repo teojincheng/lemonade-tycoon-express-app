@@ -4,9 +4,11 @@ app.use(express.json());
 
 const supplyRouter = require("./routes/supply.route");
 const recipeRouter = require("./routes/recipe.route");
+const customerRouter = require("./routes/customer.route");
 
 app.use("/recipes", recipeRouter);
 app.use("/supplies", supplyRouter);
+app.use("/customers", customerRouter);
 
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;

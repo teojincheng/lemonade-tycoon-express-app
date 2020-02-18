@@ -1,27 +1,23 @@
 const express = require("express");
 const router = express.Router();
+const axios = require("axios");
+const Customer = require("../Customer");
 
-const Customer = require("../models/customer.model");
-
-const createCustomers = async customerData => {
-  await Customer.init();
-  const customer = new Customer();
-  customer.customers = customerData;
-  await customer.save();
+const createCustomersWithImage = apiImages => {
+  const NUM_CUSTOMERS = 2;
+  const customers = [];
+  for (let i = 0; i < NUM_CUSTOMERS; i++) {
+    const newCustomer = new Customer();
+    newCustomer.imageSrc = apiImages.data.results[i].picture.medium;
+    customers.push(newCustomer);
+  }
+  return customers;
 };
 
-router.post("/", async (req, res, next) => {
-  try {
-    await createCustomers(req.body);
-    res.status(201).send(req.body);
-  } catch (err) {
-    if (err.name === "ValidationError") {
-      err.statusCode = 400;
-    } else if (err.name === "MongoError") {
-      err.statusCode = 400;
-    }
-    next(err);
-  }
+router.get("/", async (req, res) => {
+  const images = await axios("https://randomuser.me/api/?results=2");
+  const customers = createCustomersWithImage(images);
+  res.status(200).send(customers);
 });
 
 module.exports = router;
