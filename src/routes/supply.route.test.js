@@ -62,7 +62,7 @@ describe("supplies", () => {
       .send(SuppliesData)
       .expect(201);
 
-    expect(actualResponse).toEqual({ items: SuppliesData });
+    expect(actualResponse).toEqual(SuppliesData);
   });
 
   it("PATCH /supplies/:name should update the correct supply item and respond with the updated item", async () => {

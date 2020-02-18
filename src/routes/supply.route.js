@@ -32,9 +32,8 @@ const updateItem = async (itemName, itemData) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    suppliesObj = { items: req.body };
     await createSupplyItem(req.body);
-    res.status(201).send(suppliesObj);
+    res.status(201).send(req.body);
   } catch (err) {
     if (err.name === "ValidationError") {
       err.statusCode = 400;
