@@ -16,8 +16,7 @@ const updateItem = async (itemName, itemData) => {
   const updatedItem = await Supply.findOneAndUpdate(
     { "items.name": itemName },
     { $set: { "items.$.qty": itemData.qty } },
-    { new: true },
-    function(err, doc) {}
+    { new: true }
   );
 
   //const item = supply.findOne({ "items.name": itemName });
@@ -28,7 +27,7 @@ const updateItem = async (itemName, itemData) => {
   });
   return result;
   */
-  return updatedItem;
+  return updatedItem.items[0];
 };
 
 router.post("/", async (req, res, next) => {
@@ -50,10 +49,10 @@ router.patch("/:name", async (req, res) => {
   const updatedItem = await updateItem(req.params.name, req.body);
   console.log("checking for updated item");
   console.log(updatedItem);
-  const response = {};
-  response.name = updatedItem.name;
-  response.qty = updatedItem.qty;
-  res.status(200).send(response);
+  const updatedResponse = {};
+  updatedResponse.name = updatedItem.name;
+  updatedResponse.qty = updatedItem.qty;
+  res.status(200).send(updatedResponse);
 });
 
 module.exports = router;
