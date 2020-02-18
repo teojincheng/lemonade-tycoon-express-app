@@ -7,11 +7,15 @@ arrOfCustomer = [customerA, customerB];
 arrOfRandomPeopleData = [];
 arrOfRandomPeopleData.length = 2;
 
-axios("https://randomuser.me/api/?results=2").then(response => {
-  arrOfRandomPeopleData.splice(0, Array1.length, ...response.data.result);
-  //response.data.results;
-});
+setImageOfCustomers = response => {
+  arrOfRandomPeopleData.splice(
+    0,
+    arrOfRandomPeopleData.length,
+    ...response.data.results
+  );
+  for (let i = 0; i < arrOfCustomer.length; i++) {
+    arrOfCustomer[i].imageSrc = arrOfRandomPeopleData[i].picture.medium;
+  }
+};
 
-for (let i = 0; i < arrOfCustomer.length; i++) {
-  arrOfCustomer[i].imageSrc = arrOfRandomPeopleData[i].picture.medium;
-}
+axios("https://randomuser.me/api/?results=2").then(setImageOfCustomers);
