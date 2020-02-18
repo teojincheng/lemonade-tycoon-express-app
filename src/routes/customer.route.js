@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Customer = require("../models/customer.model");
 
-const createCustomer = async customerData => {
+const createCustomers = async customerData => {
   await Customer.init();
   const customer = new Customer();
   customer.customers = customerData;
@@ -12,9 +12,8 @@ const createCustomer = async customerData => {
 
 router.post("/", async (req, res, next) => {
   try {
-    suppliesObj = { items: req.body };
-    await createSupplyItem(req.body);
-    res.status(201).send(suppliesObj);
+    await createCustomers(req.body);
+    res.status(201).send(req.body);
   } catch (err) {
     if (err.name === "ValidationError") {
       err.statusCode = 400;
@@ -24,3 +23,5 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
+
+module.exports = router;

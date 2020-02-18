@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Supply = require("../models/supply.model");
 
-const createSupplyItem = async supplyData => {
+const createSupplyItems = async supplyData => {
   await Supply.init();
   const supply = new Supply();
   supply.items = supplyData;
@@ -32,7 +32,7 @@ const updateItem = async (itemName, itemData) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    await createSupplyItem(req.body);
+    await createSupplyItems(req.body);
     res.status(201).send(req.body);
   } catch (err) {
     if (err.name === "ValidationError") {
