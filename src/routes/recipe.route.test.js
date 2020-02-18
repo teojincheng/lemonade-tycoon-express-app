@@ -46,7 +46,7 @@ describe("recipes", () => {
 
   it("POST /recipe should add a new recipe item and respond with new item", async () => {
     const itemData = {
-      name: "Lemon",
+      name: "Ice",
       qty: 1
     };
 

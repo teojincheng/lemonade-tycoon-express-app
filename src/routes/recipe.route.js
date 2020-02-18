@@ -12,10 +12,10 @@ const createRecipeItem = async recipeData => {
 router.post("/", async (req, res, next) => {
   try {
     await createRecipeItem(req.body);
+    res.status(201).send(req.body);
   } catch (err) {
     next(err);
   }
-  res.status(201).send(req.body);
 });
 
 module.exports = router;

@@ -47,8 +47,6 @@ router.post("/", async (req, res, next) => {
 
 router.patch("/:name", async (req, res) => {
   const updatedItem = await updateItem(req.params.name, req.body);
-  console.log("checking for updated item");
-  console.log(updatedItem);
   const updatedResponse = {};
   updatedResponse.name = updatedItem.name;
   updatedResponse.qty = updatedItem.qty;
