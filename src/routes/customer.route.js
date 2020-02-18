@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const Customer = require("../Customer");
+const NUM_CUSTOMERS = 2;
 
 const createCustomersWithImage = apiImages => {
-  const NUM_CUSTOMERS = 2;
   const customers = [];
   for (let i = 0; i < NUM_CUSTOMERS; i++) {
     const newCustomer = new Customer();
@@ -15,7 +15,9 @@ const createCustomersWithImage = apiImages => {
 };
 
 router.get("/", async (req, res) => {
-  const images = await axios("https://randomuser.me/api/?results=2");
+  const images = await axios(
+    `https://randomuser.me/api/?results=${NUM_CUSTOMERS}`
+  );
   const customers = createCustomersWithImage(images);
   res.status(200).send(customers);
 });
