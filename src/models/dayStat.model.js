@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const statsSchema = new mongoose.Schema({
   dayNumber: {
     type: Number,
-    required: true
+    required: true,
+    unique: true
   },
   costPerCup: {
     type: Number,
