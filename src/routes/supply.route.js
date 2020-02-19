@@ -12,13 +12,6 @@ const createSupplyItems = async supplyData => {
   //await doc.save();
 };
 
-/*
-const findMongooseIdOfDocument = async () => {
-  const SuppliesDocument = await Supply.findOne().select("_id");
-  return SuppliesDocument;
-};
-*/
-
 const updateItem = async (itemName, itemData) => {
   const updatedItem = await Supply.findOneAndUpdate(
     { "items.name": itemName },
@@ -77,12 +70,5 @@ router.patch("/", async (req, res) => {
 
   Promise.all(arrOfPromises).then(res.status(200).send(req.body));
 });
-
-/*
-router.get("/idOfDocument", async (req, res) => {
-  const id = await findMongooseIdOfDocument();
-  res.status(200).send(id);
-});
-*/
 
 module.exports = router;
