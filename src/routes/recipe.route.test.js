@@ -44,7 +44,7 @@ describe("recipes", () => {
     await Recipe.deleteMany();
   });
 
-  it("POST /recipe should add a new recipe item and respond with new item", async () => {
+  it("POST /recipes should add a new recipe item and respond with new item", async () => {
     const itemData = {
       name: "Ice",
       qty: 1
@@ -54,6 +54,20 @@ describe("recipes", () => {
       .post("/recipes")
       .expect(201)
       .send(itemData);
+
+    expect(actualResponse).toEqual(itemData);
+  });
+
+  it("PATCH /recipes/:name shoupld update the recipe item and respond with update items", async () => {
+    const itemData = {
+      name: "Lemon",
+      qty: 3
+    };
+
+    const { body: actualResponse } = await request(app)
+      .patch(`/recipes/${itemData.name}`)
+      .send(itemData)
+      .expect(200);
 
     expect(actualResponse).toEqual(itemData);
   });

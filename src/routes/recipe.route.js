@@ -9,6 +9,13 @@ const createRecipeItem = async recipeData => {
   await doc.save();
 };
 
+const updateRecipeItem = async (itemName, recipeData) => {
+  const result = await Recipe.findOneAndUpdate({ name: itemName }, recipeData, {
+    new: true
+  });
+  return result;
+};
+
 router.post("/", async (req, res, next) => {
   try {
     await createRecipeItem(req.body);
@@ -16,6 +23,14 @@ router.post("/", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+router.patch("/:name", async (req, res, next) => {
+  const updatedRecipeItem = await updateRecipeItem(req.params.name, req.body);
+  const updatedItemResult = {};
+  updatedItemResult.name = updatedRecipeItem.name;
+  updatedItemResult.qty = updatedRecipeItem.qty;
+  res.status(200).send(updatedItemResult);
 });
 
 module.exports = router;
