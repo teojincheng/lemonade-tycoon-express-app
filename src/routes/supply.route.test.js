@@ -43,7 +43,7 @@ describe("supplies", () => {
     await Supply.deleteMany();
   });
 
-  it("POST /supplies should add a new supply item and respond with new item", async () => {
+  it("POST /supplies should create new supply items and respond with new items", async () => {
     const SuppliesData = [
       {
         name: "Lemon",
@@ -76,5 +76,25 @@ describe("supplies", () => {
       .expect(200);
 
     expect(actualResponse).toEqual(itemData);
+  });
+
+  it("PATCH /supplies should update multiple supply items and respond with the updated items", async () => {
+    const newData = [
+      {
+        name: "Lemon",
+        qty: 1
+      },
+      {
+        name: "Ice",
+        qty: 1
+      }
+    ];
+
+    const { body: actualResponse } = await request(app)
+      .patch("/supplies/")
+      .send(newData)
+      .expect(200);
+
+    expect(actualResponse).toEqual(newData);
   });
 });

@@ -12,6 +12,13 @@ const createSupplyItems = async supplyData => {
   //await doc.save();
 };
 
+/*
+const findMongooseIdOfDocument = async () => {
+  const SuppliesDocument = await Supply.findOne().select("_id");
+  return SuppliesDocument;
+};
+*/
+
 const updateItem = async (itemName, itemData) => {
   const updatedItem = await Supply.findOneAndUpdate(
     { "items.name": itemName },
@@ -28,6 +35,19 @@ const updateItem = async (itemName, itemData) => {
   return result;
   */
   return updatedItem.items[0];
+};
+
+const updateSupplies = async suppliesData => {
+  let arrOfPromises = [];
+  for (let i = 0; i < suppliesData.length; i++) {
+    arrOfPromises.push(
+      await Supply.updateOne(
+        { "items.name": suppliesData[i].name },
+        { $set: { "items.$.qty": suppliesData[i].qty } }
+      )
+    );
+  }
+  return arrOfPromises;
 };
 
 router.post("/", async (req, res, next) => {
@@ -51,5 +71,18 @@ router.patch("/:name", async (req, res) => {
   updatedResponse.qty = updatedItem.qty;
   res.status(200).send(updatedResponse);
 });
+
+router.patch("/", async (req, res) => {
+  let arrOfPromises = await updateSupplies(req.body);
+
+  Promise.all(arrOfPromises).then(res.status(200).send(req.body));
+});
+
+/*
+router.get("/idOfDocument", async (req, res) => {
+  const id = await findMongooseIdOfDocument();
+  res.status(200).send(id);
+});
+*/
 
 module.exports = router;
