@@ -12,6 +12,11 @@ const createSupplyItems = async supplyData => {
   //await doc.save();
 };
 
+const getArrayOfSupplyItems = async () => {
+  const SuppliesDocument = await Supply.findOne().select("-_id -__v");
+  return SuppliesDocument.items;
+};
+
 const updateItem = async (itemName, itemData) => {
   const updatedItem = await Supply.findOneAndUpdate(
     { "items.name": itemName },
@@ -69,6 +74,11 @@ router.patch("/", async (req, res) => {
   let arrOfPromises = await updateSupplies(req.body);
 
   Promise.all(arrOfPromises).then(res.status(200).send(req.body));
+});
+
+router.get("/", async (req, res) => {
+  const arrOfSupplies = await getArrayOfSupplyItems();
+  res.status(200).send(arrOfSupplies);
 });
 
 module.exports = router;

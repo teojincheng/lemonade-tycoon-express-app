@@ -1,17 +1,20 @@
 const mongoose = require("mongoose");
 
-const item = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true
+const item = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    qty: {
+      type: Number,
+      required: true
+    },
+    costPrice: Number
   },
-  qty: {
-    type: Number,
-    required: true
-  },
-  costPrice: Number
-});
+  { _id: false }
+);
 
 const supplySchema = new mongoose.Schema({
   items: [item]

@@ -91,10 +91,25 @@ describe("supplies", () => {
     ];
 
     const { body: actualResponse } = await request(app)
-      .patch("/supplies/")
+      .patch("/supplies")
       .send(newData)
       .expect(200);
 
     expect(actualResponse).toEqual(newData);
+  });
+
+  it("GET /supplies should retrieve all the supply items and respond with them.", async () => {
+    const expectedData = [
+      {
+        name: "Sugar",
+        qty: 5,
+        costPrice: 0.4
+      }
+    ];
+    const { body: actualResponse } = await request(app)
+      .get("/supplies")
+      .expect(200);
+
+    expect(actualResponse).toEqual(expectedData);
   });
 });
