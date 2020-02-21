@@ -1,6 +1,14 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
+const cors = require("cors");
+
+const corsOptions = {
+  origin: ["http://localhost:3001", "http://localhost:3000"],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 
 const supplyRouter = require("./routes/supply.route");
 const recipeRouter = require("./routes/recipe.route");
