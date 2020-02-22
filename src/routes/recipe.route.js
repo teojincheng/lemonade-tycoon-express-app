@@ -16,6 +16,16 @@ const updateRecipeItem = async (itemName, recipeData) => {
   return result;
 };
 
+const getAllRecipeData = async () => {
+  const recipesData = await Recipe.find({}, "name qty -_id");
+  return recipesData;
+};
+
+const deleteRecipes = async () => {
+  const result = await Recipe.deleteMany({});
+  return result;
+};
+
 router.post("/", async (req, res, next) => {
   try {
     await createRecipeItem(req.body);
@@ -31,6 +41,12 @@ router.patch("/:name", async (req, res, next) => {
   updatedItemResult.name = updatedRecipeItem.name;
   updatedItemResult.qty = updatedRecipeItem.qty;
   res.status(200).send(updatedItemResult);
+});
+
+router.delete("/", async (req, res, next) => {
+  const recipesData = await getAllRecipeData();
+  const deleteResult = await deleteRecipes();
+  res.status(200).send(recipesData);
 });
 
 module.exports = router;

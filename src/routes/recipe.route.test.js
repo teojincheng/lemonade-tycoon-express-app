@@ -71,4 +71,23 @@ describe("recipes", () => {
 
     expect(actualResponse).toEqual(itemData);
   });
+
+  it("DELETE /recipes should delete the recipes documents and respond with the deleted recipe items", async () => {
+    const expectedData = [
+      {
+        name: "Lemon",
+        qty: 5
+      },
+      {
+        name: "Sugar",
+        qty: 5
+      }
+    ];
+
+    const { body: actualResponse } = await request(app)
+      .delete("/recipes")
+      .expect(200);
+
+    expect(actualResponse).toEqual(expectedData);
+  });
 });

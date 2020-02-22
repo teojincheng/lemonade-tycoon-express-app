@@ -48,6 +48,11 @@ const updateSupplies = async suppliesData => {
   return arrOfPromises;
 };
 
+const deleteSupplies = async () => {
+  const result = await Supply.deleteMany({});
+  return result;
+};
+
 router.post("/", async (req, res, next) => {
   try {
     await createSupplyItems(req.body);
@@ -78,6 +83,12 @@ router.patch("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   const arrOfSupplies = await getArrayOfSupplyItems();
+  res.status(200).send(arrOfSupplies);
+});
+
+router.delete("/", async (req, res) => {
+  const arrOfSupplies = await getArrayOfSupplyItems();
+  const deleteResult = await deleteSupplies();
   res.status(200).send(arrOfSupplies);
 });
 

@@ -112,4 +112,20 @@ describe("supplies", () => {
 
     expect(actualResponse).toEqual(expectedData);
   });
+
+  it("DELETE supplies should delete the supplies document and return a response which shows the supply items being deleted ", async () => {
+    const expectedData = [
+      {
+        name: "Sugar",
+        qty: 5,
+        costPrice: 0.4
+      }
+    ];
+
+    const { body: actualResponse } = await request(app)
+      .delete("/supplies")
+      .expect(200);
+
+    expect(actualResponse).toEqual(expectedData);
+  });
 });
