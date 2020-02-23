@@ -9,6 +9,20 @@ const createStatObj = async statsData => {
   await doc.save();
 };
 
+const getStatistics = async () => {
+  const statistics = await DayStat.aggregate([
+    {
+      $group: {
+        _id: "$dayNumber",
+        profitPerCup: {
+          $sum: { $subtract: ["$sellingPricePerCup", "$costPerCup"] }
+        }
+      }
+    }
+  ]);
+  return statistics;
+};
+
 router.post("/", async (req, res, next) => {
   try {
     await createStatObj(req.body);
@@ -16,6 +30,11 @@ router.post("/", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+router.get("/", async (req, res) => {
+  const statistics = await getStatistics();
+  res.status(200).send(statistics);
 });
 
 module.exports = router;
