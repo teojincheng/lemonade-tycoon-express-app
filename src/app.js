@@ -10,6 +10,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.get("/", (req, res) => {
+  res.status(200).send("hello this is lemonade tycoon backend");
+});
+
 const supplyRouter = require("./routes/supply.route");
 const recipeRouter = require("./routes/recipe.route");
 const customerRouter = require("./routes/customer.route");
