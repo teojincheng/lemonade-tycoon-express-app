@@ -23,6 +23,11 @@ const getStatistics = async () => {
   return statistics;
 };
 
+const deleteStatistics = async () => {
+  const result = await DayStat.deleteMany({});
+  return result;
+};
+
 router.post("/", async (req, res, next) => {
   try {
     await createStatObj(req.body);
@@ -35,6 +40,11 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res) => {
   const statistics = await getStatistics();
   res.status(200).send(statistics);
+});
+
+router.delete("/", async (req, res) => {
+  const result = await deleteStatistics();
+  res.status(200).send("deleted");
 });
 
 module.exports = router;
