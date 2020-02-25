@@ -7,6 +7,6 @@ describe("Customers", () => {
       .get("/customers")
       .expect(200);
 
-    expect(actualCustomer[0]).toEqual({ _imageSrc: expect.any(String) });
+    expect(actualCustomer[0]).toEqual({ imageSrc: expect.any(String) });
   });
 });

@@ -1,10 +1,6 @@
 class Customer {
-  constructor() {
-    this._imageSrc = "";
-  }
-
-  set imageSrc(src) {
-    this._imageSrc = src;
+  constructor(imageSrc) {
+    this.imageSrc = imageSrc;
   }
 }
 
