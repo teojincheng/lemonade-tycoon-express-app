@@ -8,8 +8,6 @@ const createSupplyItems = async supplyData => {
   const supply = new Supply();
   supply.items = supplyData;
   await supply.save();
-  //const doc = Supply(supplyData);
-  //await doc.save();
 };
 
 const getArrayOfSupplyItems = async () => {
@@ -23,15 +21,6 @@ const updateItem = async (itemName, itemData) => {
     { $set: { "items.$.qty": itemData.qty } },
     { new: true }
   );
-
-  //const item = supply.findOne({ "items.name": itemName });
-
-  /*
-  const result = await Supply.findOneAndUpdate({ name }, itemData, {
-    new: true
-  });
-  return result;
-  */
   return updatedItem.items[0];
 };
 

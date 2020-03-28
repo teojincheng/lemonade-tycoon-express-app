@@ -11,7 +11,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
-  res.status(200).send("hello this is lemonade tycoon backend wow");
+  res.status(200).send("Lemonade Tycoon backend");
 });
 
 const supplyRouter = require("./routes/supply.route");

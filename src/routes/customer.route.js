@@ -10,7 +10,6 @@ const createCustomersWithImage = apiImages => {
 
   for (let i = 0; i < NUM_CUSTOMERS; i++) {
     const newCustomer = new Customer(apiImages.data.results[i].picture.medium);
-    //newCustomer.imageSrc = apiImages.data.results[i].picture.medium;
     customers.push(newCustomer);
   }
 
@@ -29,10 +28,6 @@ router.get("/", async (req, res) => {
       const newCustomer = new Customer(
         ARR_OF_IMAGES[Math.floor(Math.random() * ARR_OF_IMAGES.length)]
       );
-      /*newCustomer.imageSrc =
-        Constant.ARR_OF_IMAGES[
-          Math.floor(Math.random() * Constant.ARR_OF_IMAGES.length)
-        ]; */
       customers.push(newCustomer);
     }
   }
