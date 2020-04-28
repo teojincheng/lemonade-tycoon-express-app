@@ -22,3 +22,5 @@ cors version 2.8.5
 dotenv version 8.2.0  
 express version 4.17.1  
 mongoose version 5.9.1
+
+Front end repo: https://github.com/teojincheng/lemonade-tycoon-react-app
